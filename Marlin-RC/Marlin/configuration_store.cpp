@@ -552,7 +552,7 @@ void Config_Postprocess() {
    }
 
     #if ENABLED(EEPROM_CHITCHAT)
-      Config_PrintSettings();
+      //Config_PrintSettings();  //Truby shut it down
     #endif
   }
 

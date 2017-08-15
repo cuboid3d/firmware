@@ -1079,7 +1079,7 @@
  */
 
 // @section i2cbus
-/* Truby : Change for D7 open the i2c bus, Set the Slave address */
+/* Cuboid : open the i2c bus, Set the Slave address */
 #define EXPERIMENTAL_I2CBUS
 #define I2C_SLAVE_ADDRESS  0 // Set a value from 8 to 127 to act as a slave
 

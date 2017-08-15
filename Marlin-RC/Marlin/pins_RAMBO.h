@@ -74,26 +74,15 @@
 #define X_MAX_PIN          24
 #define Y_MIN_PIN          11
 #define Y_MAX_PIN          23
-
-/* Truby Change D7 board */
-#if 1
 #define Z_MIN_PIN          10
 #define Z_MAX_PIN          30
-#else
-#define Z_MIN_PIN          19
-#define Z_MAX_PIN          18
-#endif
 
 //
 // Steppers
 //
 #define X_STEP_PIN         37
-/* Truby Change D7 board */
-#if 1
 #define X_DIR_PIN          48
-#else
-#define X_DIR_PIN          47
-#endif
+
 
 #define X_ENABLE_PIN       29
 
@@ -101,16 +90,9 @@
 #define Y_DIR_PIN          49
 #define Y_ENABLE_PIN       28
 
-/* Truby Change for D7 board */
-#if 1
 #define Z_STEP_PIN         35
 #define Z_DIR_PIN          47
 #define Z_ENABLE_PIN       27
-#else
-#define Z_STEP_PIN         46
-#define Z_DIR_PIN          48
-#define Z_ENABLE_PIN       14
-#endif
 
 #define E0_STEP_PIN        34
 #define E0_DIR_PIN         43
@@ -141,39 +123,21 @@
 //
 // Temperature Sensors
 //
-/* Truby : Change for D7 Board */
-#if 1
 #define TEMP_0_PIN          0   // Analog Input
-#else
-#define TEMP_0_PIN          8   // Analog Input   Just for test motor
-#endif
 #define TEMP_1_PIN          1   // Analog Input
 #define TEMP_BED_PIN        2   // Analog Input
 
 //
 // Heaters / Fans
 //
-/* Truby Change for D7 board */
-#if 1
 #define HEATER_0_PIN        9
-#else
-#define HEATER_0_PIN        6
-#endif
-
 #define HEATER_1_PIN        7
 #define HEATER_2_PIN        6
 #define HEATER_BED_PIN      3
 
-/* Truby Change for D7 board */
-#if 1
 #define FAN_PIN             8   // Fan_0
 #define FAN1_PIN            6   // Fan_1
 #define FAN2_PIN            2   // Fan_2
-#else
-#define FAN_PIN             9   // Fan_0   LED
-#define FAN1_PIN            8   // Fan_1   Fan
-#define FAN2_PIN            2   // Fan_2
-#endif
 
 //
 // Misc. Functions

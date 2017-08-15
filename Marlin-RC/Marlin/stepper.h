@@ -276,7 +276,7 @@ class Stepper {
       return endstops_trigsteps[axis] * planner.steps_to_mm[axis];
     }
 
-    /* Truby: Add for auto test */ 
+    /* Cuboid: Add for auto test */ 
     #if ENABLED(AUTOTEST)
     void stepper_test(void);
     #endif

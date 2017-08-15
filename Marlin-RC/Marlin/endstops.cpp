@@ -179,7 +179,7 @@ void Endstops::report_state() {
   }
 } // Endstops::report_state
 
-/* Truby : Add for AUTOTEST */
+/* Cuboid : Add for AUTOTEST */
 #if ENABLED(AUTOTEST)
 uint8_t Endstops::min_z_is_limited(void) {
 #if HAS_Z_MIN

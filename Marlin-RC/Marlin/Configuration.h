@@ -38,12 +38,15 @@
 #ifndef CONFIGURATION_H
 #define CONFIGURATION_H
 
-/* Truby : define borad as rambo 301 */
+/* Cuboid : define borad as rambo 301 */
 #define MOTHERBOARD BOARD_RAMBO
-/* Truby : Add HDMI2MMIPI setup */
+/* Cuboid : Add HDMI2MMIPI setup */
 //#define HDMI2MIPI
-/* Truby : Auto test for manufacture */
+/* Cuboid : Auto test for manufacture */
 //#define AUTOTEST
+
+/* Cuboid : Nano support, add movement sync and "Z_move_comp" feedback msg */
+#define  NANODLP
 
 /**
  *
@@ -93,7 +96,7 @@
 // User-specified version info of this build to display in [Pronterface, etc] terminal window during
 // startup. Implementation of an idea by Prof Braino to inform user that any changes made to this
 // build by the user have been successfully uploaded into firmware.
-#define STRING_CONFIG_H_AUTHOR "(Truby, D7 config)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "(Truby Zong, Cuboid)" // Who made the changes.
 #define SHOW_BOOTSCREEN
 #define STRING_SPLASH_LINE1 SHORT_BUILD_VERSION // will be shown during bootup in line 1
 #define STRING_SPLASH_LINE2 WEBSITE_URL         // will be shown during bootup in line 2
@@ -385,7 +388,7 @@
 // It also enables the M302 command to set the minimum extrusion temperature
 // or to allow moving the extruder regardless of the hotend temperature.
 // *** IT IS HIGHLY RECOMMENDED TO LEAVE THIS OPTION ENABLED! ***
-#define PREVENT_COLD_EXTRUSION
+//#define PREVENT_COLD_EXTRUSION  //Truby shut it down
 #define EXTRUDE_MINTEMP 170
 
 // This option prevents a single extrusion longer than EXTRUDE_MAXLENGTH.
@@ -462,7 +465,7 @@
   //#define ENDSTOPPULLUP_XMIN
   //#define ENDSTOPPULLUP_YMIN
   //#define ENDSTOPPULLUP_ZMIN
-  /* Truby : Change for TZ Board */
+  /* Cuboid : Change for TZ Board */
   #define ENDSTOPPULLUP_ZMIN
   #define ENDSTOPPULLUP_ZMAX
   #define ENDSTOPPULLUP_ZMIN_PROBE
@@ -474,7 +477,7 @@
 #define X_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
 #define Y_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
 
-/* Truby: Change for TZ Board */
+/* Cuboid: Change for TZ Board */
 #define Z_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.  
 #define Z_MAX_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
 
@@ -506,7 +509,7 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3]]]
  */
-/* Truby : Change to fix with TZ Board */
+/* Cuboid : Change to fix with TZ Board */
 #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 12800, 500 }  /* LV8729V : 200 * 128 * 2 */
 
 /**
@@ -715,12 +718,11 @@
 #define INVERT_X_DIR false
 #define INVERT_Y_DIR true
 
-/* Truby : Change for D7 Board */
+/* Cuboid : Change for TZ Board */
 #if 0
 #define INVERT_Z_DIR false
 #else
-#define INVERT_Z_DIR true   /* A4982 */
-//#define INVERT_Z_DIR false   /* LV8729V */
+#define INVERT_Z_DIR true     
 #endif
 // @section extruder
 
@@ -920,7 +922,7 @@
 // Homing speeds (mm/m)
 #define HOMING_FEEDRATE_XY (50*60)
 
-/* Truby : Change for D7 Board */
+/* Cuboid : Change for TZ Board */
 #define HOMING_FEEDRATE_Z  (4*60)
 
 

@@ -2663,7 +2663,7 @@ static void homeaxis(AxisEnum axis) {
     #if ENABLED(DEBUG_LEVELING_FEATURE)
       if (DEBUGGING(LEVELING)) SERIAL_ECHOLNPGM("Home 2 Slow:");
     #endif
-       SERIAL_ECHOLNPGM("moving back:");
+    //SERIAL_ECHOLNPGM("moving back:");
     do_homing_move(axis, 2 * bump, get_homing_bump_feedrate(axis));
   }
 
@@ -2840,8 +2840,19 @@ void gcode_get_destination() {
       destination[i] = current_position[i];
   }
 
+  /* Cuboid : Add for Nanodlp speed unit um/sec */
+#if 0
+  if (code_seen('F') && code_value_linear_units() > 0.0) {
+    if (code_seen('P') && code_value_ushort() > 0) {
+      feedrate_mm_s = UMS_TO_MMS(code_value_linear_units());
+    } else {
+      feedrate_mm_s = MMM_TO_MMS(code_value_linear_units());
+    }
+  }
+#else
   if (code_seen('F') && code_value_linear_units() > 0.0)
     feedrate_mm_s = MMM_TO_MMS(code_value_linear_units());
+#endif
 
   #if ENABLED(PRINTCOUNTER)
     if (!DEBUGGING(DRYRUN))
@@ -3636,8 +3647,8 @@ inline void gcode_G28() {
   #if HOTENDS > 1
     tool_change(old_tool_index, 0, true);
   #endif
-
-  report_current_position();
+  /* Shut it down fot the Cuboid */
+  //report_current_position();
 }
 
 #if HAS_PROBING_PROCEDURE
@@ -5198,7 +5209,7 @@ inline void gcode_M75() {
  * M76: Pause print timer
  */
 inline void gcode_M76() { 
-    /* Truby: Change for D7 Board */
+    /* Add for Cuboid */
     if (fanSpeeds[0] > 0) {
         analogWrite(FAN_PIN, 0);
     }
@@ -5213,7 +5224,7 @@ inline void gcode_M76() {
  * M77: Stop print timer
  */
 inline void gcode_M77() { 
-    /* Truby: Change for D7 Board */
+    /* Add for Cuboid */
     if (fanSpeeds[0] > 0) {
         analogWrite(FAN_PIN, 0);
     }
@@ -5384,7 +5395,7 @@ inline void gcode_M105() {
     uint16_t s = code_seen('S') ? code_value_ushort() : 255,
              p = code_seen('P') ? code_value_ushort() : 0;
     NOMORE(s, 255);
-    /* Truby: Add to limit led voltage to 36V */
+    /* Cuboid: Add to limit led voltage */
     //if (p == 0) {
       //NOMORE(s, 220);
     //}
@@ -8002,7 +8013,11 @@ void process_next_command() {
   #endif
 
   uint16_t codenum = 0; // define ahead of goto
-
+  
+  #ifdef NANODLP
+  uint16_t p = 0;
+  #endif
+  
   // Bail early if there's no code
   bool code_is_good = NUMERIC(*cmd_ptr);
   if (!code_is_good) goto ExitUnknownCommand;
@@ -8042,6 +8057,22 @@ void process_next_command() {
         #else
           gcode_G0_G1();
         #endif
+        
+        /* 
+         * Cuboid : Add to suppoort nanodlp 
+         * G1 Zxx P1
+         * Blocking Z Axis movment and send "Z_move_comp" feedback to nanodlp for sync
+         */
+        #ifdef NANODLP
+        p = code_seen('P') ? code_value_ushort() : 0;
+        if (p > 0) {
+          /* stepper sync, blocking movement */
+          stepper.synchronize();
+        }
+        /* send feedback msg "Z_MOVE_MSG" to nanodlp */
+        SERIAL_ECHOLNPGM("Z_move_comp");
+        #endif
+        
         break;
 
       // G2, G3
@@ -8093,8 +8124,20 @@ void process_next_command() {
           break;
       #endif // NOZZLE_PARK_FEATURE
 
-      case 28: // G28: Home all axes, one at a time
+      case 28: // G28: Home all axes, one at a time      
         gcode_G28();
+        
+        /* Cuboid : Add for nanodlp support */
+        #ifdef NANODLP
+        p = code_seen('P') ? code_value_ushort() : 0;
+        if (p > 0) {
+          /* stepper sync, blocking movement */
+          stepper.synchronize();
+        }
+        /* send feedback msg "Z_MOVE_MSG" to nanodlp */
+        SERIAL_ECHOLNPGM("Z_move_comp");
+        #endif
+        
         break;
 
       #if PLANNER_LEVELING
@@ -10251,7 +10294,7 @@ void setup() {
   SERIAL_EOL;
 
   #if defined(STRING_DISTRIBUTION_DATE) && defined(STRING_CONFIG_H_AUTHOR)
-    SERIAL_ECHOLNPGM("LCD Resin 3D Printer: | " __DATE__ __TIME__);
+    SERIAL_ECHOLNPGM("Cuboid Z1 SLA 3D Printer: | " __DATE__ __TIME__);
     SERIAL_ECHO_START;
     SERIAL_ECHOPGM(MSG_CONFIGURATION_VER);
     SERIAL_ECHOPGM(STRING_DISTRIBUTION_DATE);

@@ -65,7 +65,7 @@ class Endstops {
      */
     static void M119();
     
-    /* Truby : Add for AUTOTEST */
+    /* Cuboid : Add for AUTOTEST */
     #if ENABLED(AUTOTEST)
     static uint8_t min_z_is_limited(void);
     static uint8_t max_z_is_limited(void);

@@ -1401,7 +1401,7 @@ void Stepper::report_positions() {
   }
 
 #if ENABLED(AUTOTEST)
-  /* Truby : Add for auto testing */
+  /* Cuboid : Add for auto testing */
   void Stepper::stepper_test(void) {
      /* Auto generate step signal */
      uint8_t old_z_dir_pin = Z_DIR_READ;
